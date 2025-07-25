@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Briefcase, Code, Award, BookOpen, Download, Mail, Linkedin, Github, Twitter, Menu, X } from 'lucide-react';
+import { Briefcase, Code, Award, BookOpen, Download, Mail, Linkedin, Github, Twitter, Menu, X, Instagram } from 'lucide-react';
 
 // --- Main App Component ---
 // This component manages the navigation and renders the different pages.
@@ -38,7 +38,7 @@ export default function App() {
       <header className="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50 shadow-md shadow-blue-500/10">
         <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
           <a href="#" onClick={() => setCurrentPage('home')} className="text-2xl font-bold text-white hover:text-blue-400 transition-colors">
-            Tu Nombre
+            Andres Capacho
           </a>
           <div className="hidden md:flex space-x-6">
             {navLinks.map(link => (
@@ -88,11 +88,12 @@ export default function App() {
       <footer className="bg-gray-900 border-t border-gray-800">
         <div className="container mx-auto px-6 py-8 text-center text-gray-500">
           <div className="flex justify-center space-x-6 mb-4">
-            <a href="#" className="hover:text-blue-400 transition-colors"><Linkedin size={24} /></a>
-            <a href="#" className="hover:text-blue-400 transition-colors"><Github size={24} /></a>
-            <a href="#" className="hover:text-blue-400 transition-colors"><Twitter size={24} /></a>
+            <a href="https://www.linkedin.com/in/andres-capacho-4076b4290?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" className="hover:text-blue-400 transition-colors"><Linkedin size={24} /></a>
+            <a href="https://github.com/andrescapacho" className="hover:text-blue-400 transition-colors"><Github size={24} /></a>
+            <a href="http://x.com/andrescg_" className="hover:text-blue-400 transition-colors"><Twitter size={24} /></a>
+            <a href="https://www.instagram.com/andrescapacho_" className="hover:text-blue-400 transition-colors"><Instagram size={24} /></a>
           </div>
-          <p>&copy; {new Date().getFullYear()} Tu Nombre. Todos los derechos reservados.</p>
+          <p>&copy; {new Date().getFullYear()} Todos los derechos reservados Andres Capacho</p>
           <p className="text-sm mt-2">Desarrollado con React y Tailwind CSS.</p>
         </div>
       </footer>
@@ -107,15 +108,15 @@ const HomePage = ({ setCurrentPage }) => (
     <div className="container mx-auto px-6 py-20 text-center">
       <div className="flex flex-col items-center">
         <img 
-          src="https://placehold.co/150x150/1e293b/93c5fd?text=Yo" 
+          src="https://media.licdn.com/dms/image/v2/D4E03AQHMXXIx9iZ5bw/profile-displayphoto-shrink_800_800/B4EZbG3UAXHIAc-/0/1747093111264?e=1756339200&v=beta&t=ZyJ6SCTwKT5ap_OpQ2gtqUIgc5Wznz8ZGR_JsKv90kk" 
           alt="Foto de perfil" 
           className="w-40 h-40 rounded-full mb-6 border-4 border-blue-500 shadow-lg"
         />
         <h1 className="text-5xl md:text-6xl font-extrabold text-white leading-tight mb-4">
-          Hola, soy <span className="text-blue-400">Tu Nombre</span>
+          Hola, soy <span className="text-blue-400">Andres Capacho</span>
         </h1>
         <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-8">
-          Desarrollador de Software | Apasionado por la Tecnología | Creador de Soluciones
+          Técnico en Sistemas | Apasionado por la Tecnología | Creador de Soluciones
         </p>
         <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
           <button 
@@ -148,41 +149,50 @@ const Section = ({ title, icon, children }) => (
 
 const AboutPage = () => {
   const skills = [
-    { name: 'React', level: '95%' }, { name: 'Node.js', level: '90%' },
-    { name: 'Python', level: '85%' }, { name: 'JavaScript', level: '98%' },
-    { name: 'SQL & NoSQL', level: '88%' }, { name: 'Cloud (AWS/GCP)', level: '75%' },
+    { name: 'Trabajo en equipo', level: '100%' }, { name: 'Gestión del tiempo', level: '100%' },
+    { name: 'Toma de decisiones', level: '100%' }, { name: 'Resolución de problemas', level: '100%' },
+    { name: 'Atencion al Cliente', level: '100%' }, { name: 'Comunicación', level: '100%' },
   ];
   const experiences = [
     {
-      role: 'Desarrollador de Software Senior',
-      company: 'Tech Solutions Inc.',
-      period: 'Ene 2021 - Presente',
-      description: 'Lideré el desarrollo de aplicaciones web complejas, mejorando el rendimiento en un 30%. Mentor de desarrolladores junior y clave en la arquitectura de microservicios.'
+      role: 'Técnico de Soporte',
+      company: 'Incubadora Santander.',
+      period: 'Marzo 2023 - Presente',
+      description: 'Me desempeño como Auxiliar de Sistemas y agente de mesa de ayuda, brindando soporte técnico de primer nivel a usuarios, realizando mantenimiento preventivo y correctivo de equipos, y gestionando usuarios en Active Directory y Google Workspace. También manejo herramientas ofimáticas, administro la plataforma de seguridad Sophos, realizo monitoreo de redes, instalación de software y hardware, ensamble de computadoras y soporte a impresoras, entre otras funciones.'
     },
     {
-      role: 'Desarrollador Web',
-      company: 'Innovate Digital',
-      period: 'Jun 2018 - Dic 2020',
-      description: 'Desarrollé y mantuve sitios de e-commerce para clientes, integrando pasarelas de pago y sistemas de gestión de inventario.'
+      role: 'Practicante de Sistemas',
+      company: 'Incubadora Santander.',
+      period: 'May 2022 - Oct 2022',
+      description: 'Realicé mis prácticas en el área de Sistemas, donde brindé soporte a usuarios, actué como agente de mesa de ayuda y presté asistencia en sitio. También llevé a cabo mantenimiento preventivo y correctivo de equipos de cómputo, formateo, ensamblaje de computadoras y otras funciones relacionadas con el soporte técnico.'
     },
   ];
   const education = [
+
     {
-      title: 'Ingeniería de Sistemas',
-      institution: 'Universidad Nacional',
-      period: '2014 - 2018'
+      title: 'Ingeniería en Sistemas',
+      institution: 'Universidad Nacional Abierta y a Distancia ',
+      period: 'Actualidad'
+    },
+
+    {
+      title: 'Técnico en Control de la Seguridad Digital',
+      institution: 'Servicio Nacional de Aprendizaje (SENA)',
+      period: '2020 - 2021'
     },
     {
-      title: 'Certificación en Cloud Computing',
-      institution: 'AWS Certified Developer',
-      period: '2022'
+      title: 'Técnico en Sistemas',
+      institution: 'Servicio Nacional de Aprendizaje (SENA)',
+      period: '2019 - 2020'
     },
   ];
 
   return (
     <div className="container mx-auto px-6 py-20">
       <h1 className="text-4xl font-bold text-center mb-12 text-white">Sobre Mí</h1>
-
+      <p className="text-center text-lg text-gray-400 mb-12 max-w-2xl mx-auto">
+        Soy una persona intelectual, creativa, dinámica y comprometida con mi desarrollo profesional. Me defino como alguien optimista, coherente, responsable y con una actitud proactiva frente a los retos. Cuento con habilidades en el manejo de equipos de cómputo, atención al cliente, uso de software empresarial y una fuerte orientación al trabajo en equipo.
+        </p>
       <Section title="Mis Habilidades" icon={<Code size={32} />}>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {skills.map(skill => (
@@ -263,18 +273,28 @@ const BlogPage = () => {
 
 const UtilitiesPage = () => {
   const utilities = {
+    'Inteligencia Artificial (IA)': [
+      { name: 'ChatGPT', description: 'Asistente conversacional basado en IA capaz de generar texto, escribir código y ayudarte con tareas complejas.', link: 'https://chat.openai.com/' },
+      { name: 'Gemini', description: 'Plataforma creativa con IA para generar y editar videos, imágenes y contenido multimedia.', link: 'https://runwayml.com/' },
+      { name: 'Perplexity AI',description: 'Buscador con IA que responde preguntas con fuentes confiables y actualizadas en tiempo real.',link: 'https://www.perplexity.ai/'}
+      
+    ],
     'Desarrollo': [
-      { name: 'Visual Studio Code', description: 'El editor de código por excelencia. Ligero, potente y extensible.', link: '#' },
-      { name: 'Docker', description: 'Para crear, desplegar y ejecutar aplicaciones en contenedores.', link: '#' },
-      { name: 'Postman', description: 'Herramienta indispensable para probar y documentar APIs.', link: '#' },
+      { name: 'Visual Studio Code', description: 'El editor de código por excelencia. Ligero, potente y extensible.', link: 'https://code.visualstudio.com/docs/setup/windows' },
+      { name: 'Docker', description: 'Para crear, desplegar y ejecutar aplicaciones en contenedores.', link: 'https://www.docker.com/' },
+      { name: 'Postman', description: 'Herramienta indispensable para probar y documentar APIs.', link: 'https://www.postman.com/' },
     ],
     'Diseño': [
-      { name: 'Figma', description: 'La mejor herramienta para diseño de interfaces y prototipado colaborativo.', link: '#' },
-      { name: 'Coolors', description: 'Generador de paletas de colores súper rápido y útil.', link: '#' },
+      { name: 'Figma', description: 'La mejor herramienta para diseño de interfaces y prototipado colaborativo.', link: 'https://www.figma.com/es-es/' },
+      { name: 'Coolors', description: 'Generador de paletas de colores súper rápido y útil.', link: 'https://coolors.co/' },
     ],
+   // 'Capacho': [
+   //   { name: 'Figma', description: 'La mejor herramienta para diseño de interfaces y prototipado colaborativo.', link: '#' },
+   //   { name: 'Coolors', description: 'Generador de paletas de colores súper rápido y útil.', link: '#' },
+   // ],
     'Productividad': [
-      { name: 'Notion', description: 'Mi segundo cerebro. Para tomar notas, gestionar proyectos y organizar mi vida.', link: '#' },
-      { name: 'Todoist', description: 'Un gestor de tareas simple pero muy poderoso para mantenerme enfocado.', link: '#' },
+      { name: 'Notion', description: 'Mi segundo cerebro. Para tomar notas, gestionar proyectos y organizar mi vida.', link: 'https://www.notion.com/es' },
+      { name: 'Todoist', description: 'Un gestor de tareas simple pero muy poderoso para mantenerme enfocado.', link: 'https://www.todoist.com/es' },
     ]
   };
 
@@ -341,21 +361,21 @@ const ContactPage = () => (
           <Mail size={24} className="text-blue-400 mr-4" />
           <div>
             <h4 className="font-semibold text-white">Correo Electrónico</h4>
-            <a href="mailto:tuemail@ejemplo.com" className="text-gray-300 hover:text-blue-400">tuemail@ejemplo.com</a>
+            <a href="mailto:tuemail@ejemplo.com" className="text-gray-300 hover:text-blue-400">andresc6143@gmail.com</a>
           </div>
         </div>
         <div className="bg-gray-800 p-6 rounded-lg flex items-center shadow-lg">
           <Linkedin size={24} className="text-blue-400 mr-4" />
           <div>
             <h4 className="font-semibold text-white">LinkedIn</h4>
-            <a href="#" className="text-gray-300 hover:text-blue-400">/tu-perfil-linkedin</a>
-          </div>
+            <a href="https://www.linkedin.com/in/andres-capacho-4076b4290?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" className="text-gray-300 hover:text-blue-400">Andres Capacho</a>
+          </div> 
         </div>
         <div className="bg-gray-800 p-6 rounded-lg flex items-center shadow-lg">
           <Github size={24} className="text-blue-400 mr-4" />
           <div>
             <h4 className="font-semibold text-white">GitHub</h4>
-            <a href="#" className="text-gray-300 hover:text-blue-400">/tu-usuario-github</a>
+            <a href="https://github.com/andrescapacho" className="text-gray-300 hover:text-blue-400">andrescapacho</a>
           </div>
         </div>
       </div>

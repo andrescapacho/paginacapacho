@@ -1,10 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Briefcase, Code, Award, BookOpen, Download, Mail, Linkedin, Github, Twitter, Menu, X, Instagram, Sun, Moon, Eye, Computer, Wrench, Network, Headset, Shield, FileCog, Layers, ExternalLink } from 'lucide-react';
+import { Briefcase, Code, Award, BookOpen, Download, Mail, Linkedin, Github, Twitter, Menu, X, Instagram, Sun, Moon, Eye, Computer, Wrench, Network, Headset, Shield, FileCog, Layers, ExternalLink, Loader } from 'lucide-react';
 import { TypeAnimation } from 'react-type-animation';
 import { useForm, ValidationError } from '@formspree/react';
 import { motion, useInView } from "framer-motion";
+import { createClient } from 'contentful';
 
-// --- Main App Component ---
+// --- Configuración del cliente de Contentful ---
+const client = createClient({
+  // Estas variables se toman del archivo .env.local
+  space: import.meta.env.VITE_CONTENTFUL_SPACE_ID,
+  accessToken: import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN,
+});
+
+// --- Componente Principal de la App ---
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,6 +38,8 @@ export default function App() {
         return <AboutPage />;
       case 'projects':
         return <ProjectsPage />;
+      case 'blog':
+        return <BlogPage />; // Ahora esta página es dinámica
       case 'utilities':
         return <UtilitiesPage />;
       case 'contact':
@@ -43,13 +53,13 @@ export default function App() {
     { id: 'home', title: 'Inicio' },
     { id: 'about', title: 'Sobre Mí' },
     { id: 'projects', title: 'Proyectos' },
+    { id: 'blog', title: 'Blog' },
     { id: 'utilities', title: 'Utilidades' },
     { id: 'contact', title: 'Contacto' },
   ];
 
   return (
     <div className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans leading-relaxed transition-colors duration-500">
-      {/* --- Header & Navigation --- */}
       <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50 shadow-md dark:shadow-blue-500/10">
         <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
           <a href="#" onClick={() => setCurrentPage('home')} className="text-2xl font-bold text-gray-800 dark:text-white hover:text-blue-500 dark:hover:text-blue-400 transition-colors">
@@ -79,7 +89,6 @@ export default function App() {
             </button>
           </div>
         </nav>
-        {/* --- Mobile Menu --- */}
         {isMenuOpen && (
           <div className="md:hidden bg-gray-100 dark:bg-gray-800">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col items-center">
@@ -105,7 +114,6 @@ export default function App() {
         {renderPage()}
       </main>
 
-      {/* --- Footer --- */}
       <footer className="bg-gray-50 dark:bg-gray-900 border-t dark:border-gray-800">
         <div className="container mx-auto px-6 py-8 text-center text-gray-500 dark:text-gray-400">
           <div className="flex justify-center space-x-6 mb-4">
@@ -122,7 +130,7 @@ export default function App() {
   );
 }
 
-// --- Animated Section Wrapper ---
+// --- Componentes de Animación y Secciones ---
 const AnimatedSection = ({ children, ...props }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
@@ -140,15 +148,24 @@ const AnimatedSection = ({ children, ...props }) => {
   );
 };
 
+const Section = ({ title, icon, children }) => (
+  <AnimatedSection className="mb-16">
+    <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 flex items-center">
+      {React.cloneElement(icon, { className: "mr-4 text-blue-500 dark:text-blue-400" })}
+      {title}
+    </h2>
+    {children}
+  </AnimatedSection>
+);
 
-// --- Page Components ---
+// --- Componentes de Página ---
 
 const HomePage = ({ setCurrentPage }) => (
   <div className="min-h-screen flex items-center justify-center bg-grid-gray-200/50 dark:bg-grid-gray-700/20">
     <div className="container mx-auto px-6 py-20 text-center">
       <div className="flex flex-col items-center">
         <motion.img 
-          src="https://media.licdn.com/dms/image/v2/D4E03AQHMXXIx9iZ5bw/profile-displayphoto-shrink_800_800/B4EZbG3UAXHIAc-/0/1747093111264?e=1756944000&v=beta&t=-yiJwvuomLGE8ydPHCPtPtH8vDrYLVMNpFvNWcGp5V0" 
+          src="https://media.licdn.com/dms/image/D4E03AQHMXXIx9iZ5bw/profile-displayphoto-shrink_800_800/0/1722180846067?e=1727913600&v=beta&t=7D8qYgG4bJb92Y_7wJ9-b5U9_8Jc7n8t9Z8z8Y9z8Y4" 
           alt="Foto de perfil" 
           className="w-40 h-40 rounded-full mb-6 border-4 border-blue-500 shadow-lg"
           initial={{ scale: 0 }}
@@ -200,16 +217,6 @@ const HomePage = ({ setCurrentPage }) => (
   </div>
 );
 
-const Section = ({ title, icon, children }) => (
-  <AnimatedSection className="mb-16">
-    <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 flex items-center">
-      {React.cloneElement(icon, { className: "mr-4 text-blue-500 dark:text-blue-400" })}
-      {title}
-    </h2>
-    {children}
-  </AnimatedSection>
-);
-
 const AboutPage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -241,7 +248,7 @@ const AboutPage = () => {
       title: 'Técnico en Control de la Seguridad Digital', 
       institution: 'Servicio Nacional de Aprendizaje (SENA)', 
       period: '2020 - 2021',
-      imageUrl: 'https://img.freepik.com/vector-gratis/casa-encantadora-ilustracion-arbol_1308-176337.jpg?text=Certificado+Seguridad'
+      imageUrl: 'https://placehold.co/1200x800/111827/ffffff?text=Certificado+Seguridad'
     },
     { 
       title: 'Técnico en Sistemas', 
@@ -308,7 +315,6 @@ const AboutPage = () => {
         </Section>
       </div>
 
-      {/* --- Image Modal --- */}
       {selectedImage && (
         <div 
           onClick={() => setSelectedImage(null)}
@@ -341,17 +347,17 @@ const ProjectsPage = () => {
   const projects = [
     {
       title: "Herramienta de Inventario de TI",
-      description: "Aplicación de escritorio ligera diseñada para que los administradores de TI la envíen a los usuarios. Con solo unos clics, genera y envía por correo un reporte con información clave del equipo: serial, IP, nombre del dispositivo y usuario activo.",
+      description: "Pequeña aplicación de escritorio para que los usuarios envíen datos de sus equipos (IP, Serial, Usuario) de forma automática al departamento de TI.",
       imageUrl: "https://placehold.co/600x400/1e293b/93c5fd?text=Inventario+TI",
-      tags: ["Python", "SMTP", "Automatización"],
+      tags: ["Python", "Tkinter", "Automatización"],
       liveUrl: null,
       githubUrl: "#"
     },
     {
-      title: "App de Escaneo de Red",
-      description: "Aplicación ligera que escanea la red local para identificar dispositivos conectados que disponen de una interfaz web accesible mediante navegador. Genera automáticamente un reporte en formato HTML con enlaces directos a las direcciones IP detectadas, y permite exportar los resultados en formatos XLS y PDF para facilitar su análisis y documentación.",
+      title: "Script de Monitoreo de Red",
+      description: "Un script en PowerShell que escanea la red local para detectar nuevos dispositivos y envía una alerta por correo electrónico si se encuentra una IP no reconocida.",
       imageUrl: "https://placehold.co/600x400/1e293b/93c5fd?text=Script+Red",
-      tags: ["Python", "Redes", "Seguridad"],
+      tags: ["PowerShell", "Redes", "Seguridad"],
       liveUrl: null,
       githubUrl: "#"
     },
@@ -413,6 +419,60 @@ const ProjectsPage = () => {
 };
 
 
+const BlogPage = () => {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    client.getEntries({ content_type: 'articuloBlog' })
+      .then((response) => {
+        setPosts(response.items);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error al obtener los posts de Contentful:", error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="container mx-auto px-6 py-20 text-center">
+        <Loader className="animate-spin h-12 w-12 mx-auto text-blue-500" />
+        <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">Cargando artículos desde el CMS...</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="container mx-auto px-6 py-20">
+      <h1 className="text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white">Mi Blog</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {posts.map((post, index) => (
+          <motion.div 
+            key={post.sys.id} 
+            className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col hover:shadow-xl hover:-translate-y-2 transition-transform duration-300"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            viewport={{ once: true }}
+          >
+            {post.fields.imagenPortada && (
+              <img src={`https:${post.fields.imagenPortada.fields.file.url}`} alt={post.fields.titulo} className="w-full h-40 object-cover rounded-md mb-4" />
+            )}
+            <p className="text-sm text-blue-500 dark:text-blue-400 mb-2">
+              {new Date(post.fields.fecha).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </p>
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 flex-grow">{post.fields.titulo}</h3>
+            <p className="text-gray-700 dark:text-gray-300 mb-6">{post.fields.resumen}</p>
+            <a href="#" className="text-blue-600 dark:text-blue-400 font-semibold mt-auto hover:underline">Leer más →</a>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const UtilitiesPage = () => {
   const utilities = {
     'Inteligencia Artificial (IA)': [
@@ -466,8 +526,7 @@ const UtilitiesPage = () => {
 };
 
 const ContactForm = () => {
-  //  Pega aquí el ID de tu formulario de Formspree
-  const [state, handleSubmit] = useForm("TU_ID_DE_FORMSPREE_AQUI");
+  const [state, handleSubmit] = useForm("xnnzvbwa");
 
   if (state.succeeded) {
       return (

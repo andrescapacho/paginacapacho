@@ -1,11 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { Briefcase, Code, Award, BookOpen, Download, Mail, Linkedin, Github, Twitter, Menu, X, Instagram } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Briefcase, Code, Award, BookOpen, Download, Mail, Linkedin, Github, Twitter, Menu, X, Instagram, Sun, Moon, Eye, Computer, Wrench, Network, Headset, Shield, FileCog, Layers, ExternalLink } from 'lucide-react';
+import { TypeAnimation } from 'react-type-animation';
+import { useForm, ValidationError } from '@formspree/react';
+import { motion, useInView } from "framer-motion";
 
 // --- Main App Component ---
-// This component manages the navigation and renders the different pages.
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [theme, setTheme] = useState('dark');
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
+
+  const handleThemeSwitch = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
 
   const renderPage = () => {
     switch (currentPage) {
@@ -13,8 +28,8 @@ export default function App() {
         return <HomePage setCurrentPage={setCurrentPage} />;
       case 'about':
         return <AboutPage />;
-      case 'blog':
-        return <BlogPage />;
+      case 'projects':
+        return <ProjectsPage />;
       case 'utilities':
         return <UtilitiesPage />;
       case 'contact':
@@ -27,32 +42,38 @@ export default function App() {
   const navLinks = [
     { id: 'home', title: 'Inicio' },
     { id: 'about', title: 'Sobre Mí' },
-    { id: 'blog', title: 'Blog' },
+    { id: 'projects', title: 'Proyectos' },
     { id: 'utilities', title: 'Utilidades' },
     { id: 'contact', title: 'Contacto' },
   ];
 
   return (
-    <div className="bg-gray-900 text-gray-200 font-sans leading-relaxed">
+    <div className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans leading-relaxed transition-colors duration-500">
       {/* --- Header & Navigation --- */}
-      <header className="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50 shadow-md shadow-blue-500/10">
+      <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50 shadow-md dark:shadow-blue-500/10">
         <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
-          <a href="#" onClick={() => setCurrentPage('home')} className="text-2xl font-bold text-white hover:text-blue-400 transition-colors">
+          <a href="#" onClick={() => setCurrentPage('home')} className="text-2xl font-bold text-gray-800 dark:text-white hover:text-blue-500 dark:hover:text-blue-400 transition-colors">
             Andres Capacho
           </a>
-          <div className="hidden md:flex space-x-6">
+          <div className="hidden md:flex items-center space-x-6">
             {navLinks.map(link => (
               <a
                 key={link.id}
                 href="#"
                 onClick={() => setCurrentPage(link.id)}
-                className={`text-lg hover:text-blue-400 transition-colors ${currentPage === link.id ? 'text-blue-400 font-semibold' : 'text-gray-300'}`}
+                className={`text-lg hover:text-blue-500 dark:hover:text-blue-400 transition-colors ${currentPage === link.id ? 'text-blue-500 dark:text-blue-400 font-semibold' : 'text-gray-600 dark:text-gray-300'}`}
               >
                 {link.title}
               </a>
             ))}
+            <button onClick={handleThemeSwitch} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+              {theme === 'dark' ? <Sun size={22} /> : <Moon size={22} />}
+            </button>
           </div>
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center">
+             <button onClick={handleThemeSwitch} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors mr-2">
+              {theme === 'dark' ? <Sun size={24} /> : <Moon size={24} />}
+            </button>
             <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
               {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
@@ -60,7 +81,7 @@ export default function App() {
         </nav>
         {/* --- Mobile Menu --- */}
         {isMenuOpen && (
-          <div className="md:hidden bg-gray-800">
+          <div className="md:hidden bg-gray-100 dark:bg-gray-800">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col items-center">
               {navLinks.map(link => (
                 <a
@@ -70,7 +91,7 @@ export default function App() {
                     setCurrentPage(link.id);
                     setIsMenuOpen(false);
                   }}
-                  className={`block px-3 py-2 rounded-md text-base font-medium ${currentPage === link.id ? 'text-blue-400 bg-gray-900' : 'text-gray-300 hover:bg-gray-700'}`}
+                  className={`block w-full text-center px-3 py-2 rounded-md text-base font-medium ${currentPage === link.id ? 'text-blue-500 dark:text-blue-400 bg-gray-200 dark:bg-gray-900' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'}`}
                 >
                   {link.title}
                 </a>
@@ -85,13 +106,13 @@ export default function App() {
       </main>
 
       {/* --- Footer --- */}
-      <footer className="bg-gray-900 border-t border-gray-800">
-        <div className="container mx-auto px-6 py-8 text-center text-gray-500">
+      <footer className="bg-gray-50 dark:bg-gray-900 border-t dark:border-gray-800">
+        <div className="container mx-auto px-6 py-8 text-center text-gray-500 dark:text-gray-400">
           <div className="flex justify-center space-x-6 mb-4">
-            <a href="https://www.linkedin.com/in/andres-capacho-4076b4290?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" className="hover:text-blue-400 transition-colors"><Linkedin size={24} /></a>
-            <a href="https://github.com/andrescapacho" className="hover:text-blue-400 transition-colors"><Github size={24} /></a>
-            <a href="http://x.com/andrescg_" className="hover:text-blue-400 transition-colors"><Twitter size={24} /></a>
-            <a href="https://www.instagram.com/andrescapacho_" className="hover:text-blue-400 transition-colors"><Instagram size={24} /></a>
+            <a href="https://www.linkedin.com/in/andres-capacho-4076b4290?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors"><Linkedin size={24} /></a>
+            <a href="https://github.com/andrescapacho" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors"><Github size={24} /></a>
+            <a href="http://x.com/andrescg_" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors"><Twitter size={24} /></a>
+            <a href="https://www.instagram.com/andrescapacho_" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors"><Instagram size={24} /></a>
           </div>
           <p>&copy; {new Date().getFullYear()} Todos los derechos reservados Andres Capacho</p>
           <p className="text-sm mt-2">Desarrollado con React y Tailwind CSS.</p>
@@ -101,24 +122,66 @@ export default function App() {
   );
 }
 
+// --- Animated Section Wrapper ---
+const AnimatedSection = ({ children, ...props }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
+
+  return (
+    <motion.section
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 50 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      {...props}
+    >
+      {children}
+    </motion.section>
+  );
+};
+
+
 // --- Page Components ---
 
 const HomePage = ({ setCurrentPage }) => (
-  <div className="min-h-screen flex items-center justify-center bg-grid-gray-700/20">
+  <div className="min-h-screen flex items-center justify-center bg-grid-gray-200/50 dark:bg-grid-gray-700/20">
     <div className="container mx-auto px-6 py-20 text-center">
       <div className="flex flex-col items-center">
-        <img 
-          src="https://media.licdn.com/dms/image/v2/D4E03AQHMXXIx9iZ5bw/profile-displayphoto-shrink_800_800/B4EZbG3UAXHIAc-/0/1747093111264?e=1756339200&v=beta&t=ZyJ6SCTwKT5ap_OpQ2gtqUIgc5Wznz8ZGR_JsKv90kk" 
+        <motion.img 
+          src="https://media.licdn.com/dms/image/v2/D4E03AQHMXXIx9iZ5bw/profile-displayphoto-shrink_800_800/B4EZbG3UAXHIAc-/0/1747093111264?e=1756944000&v=beta&t=-yiJwvuomLGE8ydPHCPtPtH8vDrYLVMNpFvNWcGp5V0" 
           alt="Foto de perfil" 
           className="w-40 h-40 rounded-full mb-6 border-4 border-blue-500 shadow-lg"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.5, type: 'spring' }}
         />
-        <h1 className="text-5xl md:text-6xl font-extrabold text-white leading-tight mb-4">
-          Hola, soy <span className="text-blue-400">Andres Capacho</span>
-        </h1>
-        <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-8">
-          Técnico en Sistemas | Apasionado por la Tecnología | Creador de Soluciones
-        </p>
-        <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+        <motion.h1 
+          className="text-5xl md:text-6xl font-extrabold text-gray-900 dark:text-white leading-tight mb-4"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+        >
+          Hola, soy <span className="text-blue-500 dark:text-blue-400">Andres Capacho</span>
+        </motion.h1>
+        
+        <TypeAnimation
+          sequence={[
+            'Técnico en Sistemas', 2000, 
+            'Apasionado por la Tecnología', 2000,
+            'Creador de Soluciones', 2000,
+          ]}
+          wrapper="p"
+          speed={50}
+          className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8 h-8"
+          repeat={Infinity}
+        />
+
+        <motion.div 
+          className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.4 }}
+        >
           <button 
             onClick={() => setCurrentPage('about')}
             className="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-all transform hover:scale-105 shadow-lg"
@@ -131,27 +194,32 @@ const HomePage = ({ setCurrentPage }) => (
           >
             Contáctame
           </button>
-        </div>
+        </motion.div>
       </div>
     </div>
   </div>
 );
 
 const Section = ({ title, icon, children }) => (
-  <section className="mb-16">
-    <h2 className="text-3xl font-bold text-white mb-8 flex items-center">
-      {React.cloneElement(icon, { className: "mr-4 text-blue-400" })}
+  <AnimatedSection className="mb-16">
+    <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 flex items-center">
+      {React.cloneElement(icon, { className: "mr-4 text-blue-500 dark:text-blue-400" })}
       {title}
     </h2>
     {children}
-  </section>
+  </AnimatedSection>
 );
 
 const AboutPage = () => {
+  const [selectedImage, setSelectedImage] = useState(null);
+
   const skills = [
-    { name: 'Trabajo en equipo', level: '100%' }, { name: 'Gestión del tiempo', level: '100%' },
-    { name: 'Toma de decisiones', level: '100%' }, { name: 'Resolución de problemas', level: '100%' },
-    { name: 'Atencion al Cliente', level: '100%' }, { name: 'Comunicación', level: '100%' },
+    { name: 'Sistemas Operativos', icon: <Computer size={48} /> },
+    { name: 'Hardware y Ensamblaje', icon: <Wrench size={48} /> },
+    { name: 'Redes y Monitoreo', icon: <Network size={48} /> },
+    { name: 'Soporte a Usuarios', icon: <Headset size={48} /> },
+    { name: 'Seguridad (Sophos)', icon: <Shield size={48} /> },
+    { name: 'Software y Directorios', icon: <FileCog size={48} /> },
   ];
   const experiences = [
     {
@@ -168,108 +236,182 @@ const AboutPage = () => {
     },
   ];
   const education = [
-
-    {
-      title: 'Ingeniería en Sistemas',
-      institution: 'Universidad Nacional Abierta y a Distancia ',
-      period: 'Actualidad'
+    { title: 'Ingeniería en Sistemas', institution: 'Universidad Nacional Abierta y a Distancia ', period: 'Actualidad', imageUrl: null },
+    { 
+      title: 'Técnico en Control de la Seguridad Digital', 
+      institution: 'Servicio Nacional de Aprendizaje (SENA)', 
+      period: '2020 - 2021',
+      imageUrl: 'https://img.freepik.com/vector-gratis/casa-encantadora-ilustracion-arbol_1308-176337.jpg?text=Certificado+Seguridad'
     },
-
-    {
-      title: 'Técnico en Control de la Seguridad Digital',
-      institution: 'Servicio Nacional de Aprendizaje (SENA)',
-      period: '2020 - 2021'
-    },
-    {
-      title: 'Técnico en Sistemas',
-      institution: 'Servicio Nacional de Aprendizaje (SENA)',
-      period: '2019 - 2020'
+    { 
+      title: 'Técnico en Sistemas', 
+      institution: 'Servicio Nacional de Aprendizaje (SENA)', 
+      period: '2019 - 2020',
+      imageUrl: 'https://placehold.co/1200x800/111827/ffffff?text=Certificado+Sistemas'
     },
   ];
 
   return (
-    <div className="container mx-auto px-6 py-20">
-      <h1 className="text-4xl font-bold text-center mb-12 text-white">Sobre Mí</h1>
-      <p className="text-center text-lg text-gray-400 mb-12 max-w-2xl mx-auto">
-        Soy una persona intelectual, creativa, dinámica y comprometida con mi desarrollo profesional. Me defino como alguien optimista, coherente, responsable y con una actitud proactiva frente a los retos. Cuento con habilidades en el manejo de equipos de cómputo, atención al cliente, uso de software empresarial y una fuerte orientación al trabajo en equipo.
+    <>
+      <div className="container mx-auto px-6 py-20">
+        <h1 className="text-4xl font-bold text-center mb-4 text-gray-900 dark:text-white">Sobre Mí</h1>
+        <p className="text-center text-lg text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
+          Soy una persona intelectual, creativa, dinámica y comprometida con mi desarrollo profesional. Me defino como alguien optimista, coherente, responsable y con una actitud proactiva frente a los retos.
         </p>
-      <Section title="Mis Habilidades" icon={<Code size={32} />}>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {skills.map(skill => (
-            <div key={skill.name} className="bg-gray-800 p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold text-white mb-2">{skill.name}</h3>
-              <div className="w-full bg-gray-700 rounded-full h-4">
-                <div className="bg-blue-500 h-4 rounded-full" style={{ width: skill.level }}></div>
+
+        <Section title="Mis Habilidades" icon={<Code size={32} />}>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-center">
+            {skills.map(skill => (
+              <div key={skill.name} className="flex flex-col items-center p-4 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                <div className="text-blue-500 dark:text-blue-400 mb-3">
+                    {skill.icon}
+                </div>
+                <h3 className="text-md font-semibold text-gray-800 dark:text-white h-12 flex items-center">{skill.name}</h3>
               </div>
-            </div>
-          ))}
-        </div>
-      </Section>
+            ))}
+          </div>
+        </Section>
 
-      <Section title="Experiencia Laboral" icon={<Briefcase size={32} />}>
-        <div className="relative border-l-2 border-blue-500/30 pl-8 space-y-12">
-          {experiences.map((exp, index) => (
-            <div key={index} className="relative">
-              <div className="absolute -left-[42px] top-1 w-5 h-5 bg-blue-500 rounded-full border-4 border-gray-900"></div>
-              <p className="text-sm text-blue-400 mb-1">{exp.period}</p>
-              <h3 className="text-2xl font-bold text-white">{exp.role}</h3>
-              <p className="text-lg text-gray-400 mb-2">{exp.company}</p>
-              <p className="text-gray-300">{exp.description}</p>
-            </div>
-          ))}
-        </div>
-      </Section>
+        <Section title="Experiencia Laboral" icon={<Briefcase size={32} />}>
+          <div className="relative border-l-2 border-blue-500/30 pl-8 space-y-12">
+            {experiences.map((exp, index) => (
+              <div key={index} className="relative">
+                <div className="absolute -left-[42px] top-1 w-5 h-5 bg-blue-500 rounded-full border-4 border-white dark:border-gray-900"></div>
+                <p className="text-sm text-blue-500 dark:text-blue-400 mb-1">{exp.period}</p>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{exp.role}</h3>
+                <p className="text-lg text-gray-500 dark:text-gray-400 mb-2">{exp.company}</p>
+                <p className="text-gray-700 dark:text-gray-300">{exp.description}</p>
+              </div>
+            ))}
+          </div>
+        </Section>
 
-      <Section title="Educación y Títulos" icon={<Award size={32} />}>
-        <div className="space-y-8">
-          {education.map((edu, index) => (
-            <div key={index} className="bg-gray-800 p-6 rounded-lg shadow-md">
-              <p className="text-sm text-blue-400 mb-1">{edu.period}</p>
-              <h3 className="text-xl font-bold text-white">{edu.title}</h3>
-              <p className="text-gray-400">{edu.institution}</p>
-            </div>
-          ))}
+        <Section title="Educación y Títulos" icon={<Award size={32} />}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {education.map((edu, index) => (
+              <div key={index} className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-md flex flex-col">
+                <p className="text-sm text-blue-500 dark:text-blue-400 mb-1">{edu.period}</p>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white flex-grow">{edu.title}</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-4">{edu.institution}</p>
+                {edu.imageUrl && (
+                  <button 
+                    onClick={() => setSelectedImage(edu.imageUrl)}
+                    className="mt-auto bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center"
+                  >
+                    <Eye size={18} className="mr-2"/>
+                    Ver Certificado
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+        </Section>
+      </div>
+
+      {/* --- Image Modal --- */}
+      {selectedImage && (
+        <div 
+          onClick={() => setSelectedImage(null)}
+          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
+        >
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="relative"
+          >
+            <img 
+              src={selectedImage} 
+              alt="Certificado" 
+              className="max-w-full max-h-[90vh] rounded-lg"
+            />
+            <button 
+              onClick={() => setSelectedImage(null)}
+              className="absolute -top-4 -right-4 bg-white text-black rounded-full p-2"
+            >
+              <X size={24} />
+            </button>
+          </motion.div>
         </div>
-      </Section>
-    </div>
+      )}
+    </>
   );
 };
 
-const BlogPage = () => {
-  const posts = [
+const ProjectsPage = () => {
+  const projects = [
     {
-      title: '10 Trucos de JavaScript que te Harán Más Productivo',
-      date: '24 de Julio, 2025',
-      summary: 'Descubre cómo simplificar tu código y mejorar tu eficiencia con estos consejos y trucos de JavaScript que todo desarrollador debería conocer.'
+      title: "Herramienta de Inventario de TI",
+      description: "Aplicación de escritorio ligera diseñada para que los administradores de TI la envíen a los usuarios. Con solo unos clics, genera y envía por correo un reporte con información clave del equipo: serial, IP, nombre del dispositivo y usuario activo.",
+      imageUrl: "https://placehold.co/600x400/1e293b/93c5fd?text=Inventario+TI",
+      tags: ["Python", "SMTP", "Automatización"],
+      liveUrl: null,
+      githubUrl: "#"
     },
     {
-      title: 'Introducción a la Arquitectura de Microservicios',
-      date: '15 de Julio, 2025',
-      summary: 'Una guía para principiantes sobre qué son los microservicios, por qué son tan populares y cómo pueden beneficiar a tus proyectos a gran escala.'
+      title: "App de Escaneo de Red",
+      description: "Aplicación ligera que escanea la red local para identificar dispositivos conectados que disponen de una interfaz web accesible mediante navegador. Genera automáticamente un reporte en formato HTML con enlaces directos a las direcciones IP detectadas, y permite exportar los resultados en formatos XLS y PDF para facilitar su análisis y documentación.",
+      imageUrl: "https://placehold.co/600x400/1e293b/93c5fd?text=Script+Red",
+      tags: ["Python", "Redes", "Seguridad"],
+      liveUrl: null,
+      githubUrl: "#"
     },
     {
-      title: 'Mi Experiencia Usando React vs. Vue en 2025',
-      date: '05 de Julio, 2025',
-      summary: 'Un análisis comparativo honesto entre dos de los frameworks de frontend más populares del momento, basado en mi experiencia personal.'
-    },
+      title: "Guía de Troubleshooting para Usuarios",
+      description: "Documentación técnica creada en Notion para ayudar a los usuarios a resolver problemas comunes de software y hardware antes de contactar a la mesa de ayuda.",
+      imageUrl: "https://placehold.co/600x400/1e293b/93c5fd?text=Guía+Notion",
+      tags: ["Documentación", "Soporte", "Notion"],
+      liveUrl: "#",
+      githubUrl: null
+    }
   ];
 
   return (
     <div className="container mx-auto px-6 py-20">
-      <h1 className="text-4xl font-bold text-center mb-12 text-white">Mi Blog</h1>
+      <h1 className="text-4xl font-bold text-center mb-4 text-gray-900 dark:text-white">Mis Proyectos</h1>
+      <p className="text-center text-lg text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
+        Aquí hay algunos ejemplos de soluciones y herramientas que he desarrollado para resolver problemas prácticos.
+      </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {posts.map((post, index) => (
-          <div key={index} className="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col hover:transform hover:-translate-y-2 transition-transform duration-300">
-            <p className="text-sm text-blue-400 mb-2">{post.date}</p>
-            <h3 className="text-2xl font-bold text-white mb-4 flex-grow">{post.title}</h3>
-            <p className="text-gray-300 mb-6">{post.summary}</p>
-            <a href="#" className="text-blue-400 font-semibold mt-auto hover:underline">Leer más →</a>
-          </div>
+        {projects.map((project, index) => (
+          <motion.div
+            key={index}
+            className="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            viewport={{ once: true }}
+          >
+            <img src={project.imageUrl} alt={project.title} className="w-full h-48 object-cover"/>
+            <div className="p-6 flex flex-col flex-grow">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{project.title}</h3>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {project.tags.map(tag => (
+                  <span key={tag} className="bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">{tag}</span>
+                ))}
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 mb-6 flex-grow">{project.description}</p>
+              <div className="mt-auto flex space-x-4">
+                {project.githubUrl && (
+                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex-1 text-center bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors flex items-center justify-center">
+                    <Github size={18} className="mr-2"/>
+                    Código
+                  </a>
+                )}
+                {project.liveUrl && (
+                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex-1 text-center bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center">
+                    <ExternalLink size={18} className="mr-2"/>
+                    Ver Demo
+                  </a>
+                )}
+              </div>
+            </div>
+          </motion.div>
         ))}
       </div>
     </div>
   );
 };
+
 
 const UtilitiesPage = () => {
   const utilities = {
@@ -277,7 +419,6 @@ const UtilitiesPage = () => {
       { name: 'ChatGPT', description: 'Asistente conversacional basado en IA capaz de generar texto, escribir código y ayudarte con tareas complejas.', link: 'https://chat.openai.com/' },
       { name: 'Gemini', description: 'Plataforma creativa con IA para generar y editar videos, imágenes y contenido multimedia.', link: 'https://runwayml.com/' },
       { name: 'Perplexity AI',description: 'Buscador con IA que responde preguntas con fuentes confiables y actualizadas en tiempo real.',link: 'https://www.perplexity.ai/'}
-      
     ],
     'Desarrollo': [
       { name: 'Visual Studio Code', description: 'El editor de código por excelencia. Ligero, potente y extensible.', link: 'https://code.visualstudio.com/docs/setup/windows' },
@@ -288,10 +429,6 @@ const UtilitiesPage = () => {
       { name: 'Figma', description: 'La mejor herramienta para diseño de interfaces y prototipado colaborativo.', link: 'https://www.figma.com/es-es/' },
       { name: 'Coolors', description: 'Generador de paletas de colores súper rápido y útil.', link: 'https://coolors.co/' },
     ],
-   // 'Capacho': [
-   //   { name: 'Figma', description: 'La mejor herramienta para diseño de interfaces y prototipado colaborativo.', link: '#' },
-   //   { name: 'Coolors', description: 'Generador de paletas de colores súper rápido y útil.', link: '#' },
-   // ],
     'Productividad': [
       { name: 'Notion', description: 'Mi segundo cerebro. Para tomar notas, gestionar proyectos y organizar mi vida.', link: 'https://www.notion.com/es' },
       { name: 'Todoist', description: 'Un gestor de tareas simple pero muy poderoso para mantenerme enfocado.', link: 'https://www.todoist.com/es' },
@@ -300,85 +437,115 @@ const UtilitiesPage = () => {
 
   return (
     <div className="container mx-auto px-6 py-20">
-      <h1 className="text-4xl font-bold text-center mb-12 text-white">Utilidades y Recursos</h1>
-      <p className="text-center text-lg text-gray-400 mb-12 max-w-2xl mx-auto">
+      <h1 className="text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white">Utilidades y Recursos</h1>
+      <p className="text-center text-lg text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
         Una colección de herramientas y recursos que uso en mi día a día y que recomiendo totalmente.
       </p>
       <div className="space-y-12">
         {Object.entries(utilities).map(([category, items]) => (
-          <section key={category}>
-            <h2 className="text-2xl font-bold text-blue-400 border-b-2 border-blue-500/30 pb-2 mb-6">{category}</h2>
+          <AnimatedSection key={category}>
+            <h2 className="text-2xl font-bold text-blue-500 dark:text-blue-400 border-b-2 border-blue-500/20 dark:border-blue-500/30 pb-2 mb-6">{category}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {items.map((item, index) => (
-                <div key={index} className="bg-gray-800 p-6 rounded-lg shadow-md flex items-start">
+                <div key={index} className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-md flex items-start">
                   <div className="flex-grow">
-                    <h3 className="text-xl font-semibold text-white">{item.name}</h3>
-                    <p className="text-gray-300 mt-1">{item.description}</p>
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{item.name}</h3>
+                    <p className="text-gray-700 dark:text-gray-300 mt-1">{item.description}</p>
                   </div>
-                  <a href={item.link} target="_blank" rel="noopener noreferrer" className="ml-4 bg-blue-600 p-3 rounded-full hover:bg-blue-700 transition-colors">
-                    <Download size={20} />
+                  <a href={item.link} target="_blank" rel="noopener noreferrer" className="ml-4 flex-shrink-0 bg-blue-600 p-3 rounded-full hover:bg-blue-700 transition-colors">
+                    <Download size={20} className="text-white"/>
                   </a>
                 </div>
               ))}
             </div>
-          </section>
+          </AnimatedSection>
         ))}
       </div>
     </div>
   );
 };
 
+const ContactForm = () => {
+  //  Pega aquí el ID de tu formulario de Formspree
+  const [state, handleSubmit] = useForm("TU_ID_DE_FORMSPREE_AQUI");
+
+  if (state.succeeded) {
+      return (
+        <div className="text-center bg-green-100 dark:bg-green-900/50 p-8 rounded-lg">
+          <h3 className="text-2xl font-bold text-green-800 dark:text-green-300">¡Gracias por tu mensaje!</h3>
+          <p className="text-green-700 dark:text-green-400 mt-2">Me pondré en contacto contigo pronto.</p>
+        </div>
+      );
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div className="mb-4">
+        <label htmlFor="name" className="block text-gray-600 dark:text-gray-300 mb-2">Nombre</label>
+        <input type="text" id="name" name="name" required className="w-full p-3 bg-gray-200 dark:bg-gray-700 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-white" />
+      </div>
+      <div className="mb-4">
+        <label htmlFor="email" className="block text-gray-600 dark:text-gray-300 mb-2">Correo Electrónico</label>
+        <input type="email" id="email" name="email" required className="w-full p-3 bg-gray-200 dark:bg-gray-700 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-white" />
+        <ValidationError prefix="Email" field="email" errors={state.errors} className="text-red-500 text-sm mt-1"/>
+      </div>
+      <div className="mb-6">
+        <label htmlFor="message" className="block text-gray-600 dark:text-gray-300 mb-2">Mensaje</label>
+        <textarea id="message" name="message" rows="5" required className="w-full p-3 bg-gray-200 dark:bg-gray-700 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-white"></textarea>
+        <ValidationError prefix="Message" field="message" errors={state.errors} className="text-red-500 text-sm mt-1"/>
+      </div>
+      <button type="submit" disabled={state.submitting} className="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors shadow-lg disabled:bg-gray-500">
+        {state.submitting ? 'Enviando...' : 'Enviar Mensaje'}
+      </button>
+    </form>
+  );
+}
+
 const ContactPage = () => (
   <div className="container mx-auto px-6 py-20">
-    <h1 className="text-4xl font-bold text-center mb-4 text-white">Hablemos</h1>
-    <p className="text-center text-lg text-gray-400 mb-12 max-w-2xl mx-auto">
+    <h1 className="text-4xl font-bold text-center mb-4 text-gray-900 dark:text-white">Hablemos</h1>
+    <p className="text-center text-lg text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
       ¿Tienes un proyecto en mente o simplemente quieres saludar? No dudes en contactarme.
     </p>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-      <div className="bg-gray-800 p-8 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold mb-6 text-white">Enviar un Mensaje</h2>
-        <form>
-          <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-300 mb-2">Nombre</label>
-            <input type="text" id="name" className="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-300 mb-2">Correo Electrónico</label>
-            <input type="email" id="email" className="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" />
-          </div>
-          <div className="mb-6">
-            <label htmlFor="message" className="block text-gray-300 mb-2">Mensaje</label>
-            <textarea id="message" rows="5" className="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"></textarea>
-          </div>
-          <button type="submit" className="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors shadow-lg">
-            Enviar Mensaje
-          </button>
-        </form>
-      </div>
-      <div className="space-y-6">
-        <h3 className="text-2xl font-bold text-white">Otra Información de Contacto</h3>
-        <div className="bg-gray-800 p-6 rounded-lg flex items-center shadow-lg">
-          <Mail size={24} className="text-blue-400 mr-4" />
+      <motion.div 
+        className="bg-gray-100 dark:bg-gray-800 p-8 rounded-lg shadow-lg"
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Enviar un Mensaje</h2>
+        <ContactForm />
+      </motion.div>
+      <motion.div 
+        className="space-y-6"
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Otra Información de Contacto</h3>
+        <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg flex items-center shadow-lg">
+          <Mail size={24} className="text-blue-500 dark:text-blue-400 mr-4" />
           <div>
-            <h4 className="font-semibold text-white">Correo Electrónico</h4>
-            <a href="mailto:tuemail@ejemplo.com" className="text-gray-300 hover:text-blue-400">andresc6143@gmail.com</a>
+            <h4 className="font-semibold text-gray-900 dark:text-white">Correo Electrónico</h4>
+            <a href="mailto:andresc6143@gmail.com" className="text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400">andresc6143@gmail.com</a>
           </div>
         </div>
-        <div className="bg-gray-800 p-6 rounded-lg flex items-center shadow-lg">
-          <Linkedin size={24} className="text-blue-400 mr-4" />
+        <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg flex items-center shadow-lg">
+          <Linkedin size={24} className="text-blue-500 dark:text-blue-400 mr-4" />
           <div>
-            <h4 className="font-semibold text-white">LinkedIn</h4>
-            <a href="https://www.linkedin.com/in/andres-capacho-4076b4290?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" className="text-gray-300 hover:text-blue-400">Andres Capacho</a>
+            <h4 className="font-semibold text-gray-900 dark:text-white">LinkedIn</h4>
+            <a href="https://www.linkedin.com/in/andres-capacho-4076b4290?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400">Andres Capacho</a>
           </div> 
         </div>
-        <div className="bg-gray-800 p-6 rounded-lg flex items-center shadow-lg">
-          <Github size={24} className="text-blue-400 mr-4" />
+        <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg flex items-center shadow-lg">
+          <Github size={24} className="text-blue-500 dark:text-blue-400 mr-4" />
           <div>
-            <h4 className="font-semibold text-white">GitHub</h4>
-            <a href="https://github.com/andrescapacho" className="text-gray-300 hover:text-blue-400">andrescapacho</a>
+            <h4 className="font-semibold text-gray-900 dark:text-white">GitHub</h4>
+            <a href="https://github.com/andrescapacho" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400">andrescapacho</a>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   </div>
 );

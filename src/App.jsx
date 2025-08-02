@@ -165,7 +165,7 @@ const HomePage = ({ setCurrentPage }) => (
     <div className="container mx-auto px-6 py-20 text-center">
       <div className="flex flex-col items-center">
         <motion.img 
-          src="https://fonts.gstatic.com/s/i/productlogos/meet_2020q4/v1/web-96dp/logo_meet_2020q4_color_2x_web_96dp.png" 
+          src="https://i.imgur.com/QeLysJa.jpeg?1" 
           alt="Foto de perfil" 
           className="w-40 h-40 rounded-full mb-6 border-4 border-blue-500 shadow-lg"
           initial={{ scale: 0 }}
@@ -248,28 +248,28 @@ const AboutPage = () => {
       title: 'Curso de Corel Draw', 
       institution: 'Servicio Nacional de Aprendizaje (SENA)', 
       period: '2025',
-      imageUrl: 'https://placehold.co/1200x800/111827/ffffff?text=Certificado+Seguridad'
+      imageUrl: 'https://i.imgur.com/FhdHYpy.jpeg'
     },
     
     { 
       title: 'Técnico en Control de la Seguridad Digital', 
       institution: 'Servicio Nacional de Aprendizaje (SENA)', 
       period: '2020 - 2021',
-      imageUrl: 'https://placehold.co/1200x800/111827/ffffff?text=Certificado+Seguridad'
+      imageUrl: 'https://i.imgur.com/aOf5CGF.jpeg'
     },
 
     { 
       title: 'Curso Especial en Comportamiento Emprendedor', 
       institution: 'Servicio Nacional de Aprendizaje (SENA)', 
       period: '2021',
-      imageUrl: 'https://placehold.co/1200x800/111827/ffffff?text=Certificado+Seguridad'
+      imageUrl: 'https://i.imgur.com/Ojj3QCi.jpeg'
     },
 
     { 
       title: 'Técnico en Sistemas', 
       institution: 'Servicio Nacional de Aprendizaje (SENA)', 
       period: '2019 - 2020',
-      imageUrl: 'https://drive.google.com/file/d/1PVdZgkwAeO6CRG-Q1DKiWETND6jti2b1/view?usp=sharing'
+      imageUrl: 'https://i.imgur.com/cvn7pwv.jpeg'
     },
   ];
 
@@ -366,7 +366,7 @@ const ProjectsPage = () => {
       imageUrl: "https://placehold.co/600x400/1e293b/93c5fd?text=Inventario+TI",
       tags: ["Python", "Tkinter", "Automatización"],
       liveUrl: null,
-      githubUrl: "#"
+      githubUrl: "https://github.com/andrescapacho/apps"
     },
     {
       title: "Script de Monitoreo de Red",
@@ -374,14 +374,14 @@ const ProjectsPage = () => {
       imageUrl: "https://placehold.co/600x400/1e293b/93c5fd?text=Escáner+Red",
       tags: ["PowerShell", "Redes", "Seguridad"],
       liveUrl: null,
-      githubUrl: "#"
+      githubUrl: "https://github.com/andrescapacho/apps"
     },
     {
       title: "Pagina Web",
-      description: "Documentación técnica creada en Notion para ayudar a los usuarios a resolver problemas comunes de software y hardware antes de contactar a la mesa de ayuda.",
+      description: "Creación de mi propia página web tipo portafolio, diseñada para presentar de manera profesional mi perfil personal, habilidades, experiencia y proyectos destacados.",
       imageUrl: "https://placehold.co/600x400/1e293b/93c5fd?text=Pagina+Web",
       tags: ["Documentación", "Soporte", "Notion"],
-      liveUrl: "#",
+      liveUrl: "https://capacho.vercel.app/",
       githubUrl: null
     }
   ];

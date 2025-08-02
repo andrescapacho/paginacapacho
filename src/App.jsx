@@ -39,7 +39,7 @@ export default function App() {
       case 'projects':
         return <ProjectsPage />;
       case 'blog':
-        return <BlogPage />; // Ahora esta página es dinámica
+        return <BlogPage />;
       case 'utilities':
         return <UtilitiesPage />;
       case 'contact':
@@ -122,8 +122,8 @@ export default function App() {
             <a href="http://x.com/andrescg_" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors"><Twitter size={24} /></a>
             <a href="https://www.instagram.com/andrescapacho_" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors"><Instagram size={24} /></a>
           </div>
-          <p>&copy; {new Date().getFullYear()} Todos los derechos reservados Andres Capacho</p>
-          <p className="text-sm mt-2">Desarrollado con React y Tailwind CSS.</p>
+          <p>&copy; {new Date().getFullYear()} Todos los derechos reservados.</p>
+          <p className="text-sm mt-2">Andres Capacho</p>
         </div>
       </footer>
     </div>
@@ -165,7 +165,7 @@ const HomePage = ({ setCurrentPage }) => (
     <div className="container mx-auto px-6 py-20 text-center">
       <div className="flex flex-col items-center">
         <motion.img 
-          src="https://media.licdn.com/dms/image/D4E03AQHMXXIx9iZ5bw/profile-displayphoto-shrink_800_800/0/1722180846067?e=1727913600&v=beta&t=7D8qYgG4bJb92Y_7wJ9-b5U9_8Jc7n8t9Z8z8Y9z8Y4" 
+          src="https://fonts.gstatic.com/s/i/productlogos/meet_2020q4/v1/web-96dp/logo_meet_2020q4_color_2x_web_96dp.png" 
           alt="Foto de perfil" 
           className="w-40 h-40 rounded-full mb-6 border-4 border-blue-500 shadow-lg"
           initial={{ scale: 0 }}
@@ -245,16 +245,31 @@ const AboutPage = () => {
   const education = [
     { title: 'Ingeniería en Sistemas', institution: 'Universidad Nacional Abierta y a Distancia ', period: 'Actualidad', imageUrl: null },
     { 
+      title: 'Curso de Corel Draw', 
+      institution: 'Servicio Nacional de Aprendizaje (SENA)', 
+      period: '2025',
+      imageUrl: 'https://placehold.co/1200x800/111827/ffffff?text=Certificado+Seguridad'
+    },
+    
+    { 
       title: 'Técnico en Control de la Seguridad Digital', 
       institution: 'Servicio Nacional de Aprendizaje (SENA)', 
       period: '2020 - 2021',
       imageUrl: 'https://placehold.co/1200x800/111827/ffffff?text=Certificado+Seguridad'
     },
+
+    { 
+      title: 'Curso Especial en Comportamiento Emprendedor', 
+      institution: 'Servicio Nacional de Aprendizaje (SENA)', 
+      period: '2021',
+      imageUrl: 'https://placehold.co/1200x800/111827/ffffff?text=Certificado+Seguridad'
+    },
+
     { 
       title: 'Técnico en Sistemas', 
       institution: 'Servicio Nacional de Aprendizaje (SENA)', 
       period: '2019 - 2020',
-      imageUrl: 'https://placehold.co/1200x800/111827/ffffff?text=Certificado+Sistemas'
+      imageUrl: 'https://drive.google.com/file/d/1PVdZgkwAeO6CRG-Q1DKiWETND6jti2b1/view?usp=sharing'
     },
   ];
 
@@ -356,15 +371,15 @@ const ProjectsPage = () => {
     {
       title: "Script de Monitoreo de Red",
       description: "Un script en PowerShell que escanea la red local para detectar nuevos dispositivos y envía una alerta por correo electrónico si se encuentra una IP no reconocida.",
-      imageUrl: "https://placehold.co/600x400/1e293b/93c5fd?text=Script+Red",
+      imageUrl: "https://placehold.co/600x400/1e293b/93c5fd?text=Escáner+Red",
       tags: ["PowerShell", "Redes", "Seguridad"],
       liveUrl: null,
       githubUrl: "#"
     },
     {
-      title: "Guía de Troubleshooting para Usuarios",
+      title: "Pagina Web",
       description: "Documentación técnica creada en Notion para ayudar a los usuarios a resolver problemas comunes de software y hardware antes de contactar a la mesa de ayuda.",
-      imageUrl: "https://placehold.co/600x400/1e293b/93c5fd?text=Guía+Notion",
+      imageUrl: "https://placehold.co/600x400/1e293b/93c5fd?text=Pagina+Web",
       tags: ["Documentación", "Soporte", "Notion"],
       liveUrl: "#",
       githubUrl: null

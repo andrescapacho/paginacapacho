@@ -363,7 +363,7 @@ const ProjectsPage = () => {
     {
       title: "Herramienta de Inventario",
       description: "Pequeña aplicación de escritorio que permite a los usuarios enviar automáticamente información de sus equipos (IP, serial, usuario) al departamento de TI, facilitando el registro y control de activos tecnológicos.",
-      imageUrl: "https://placehold.co/600x400/1e293b/93c5fd?text=Inventario+TI",
+      imageUrl: "https://i.imgur.com/SUWPlrg.png",
       tags: ["Python", "SMTP", "Automatización"],
       liveUrl: null,
       githubUrl: "https://github.com/andrescapacho/apps"
@@ -371,7 +371,7 @@ const ProjectsPage = () => {
     {
       title: "App Escaneo de Red",
       description: "Pequeña aplicación diseñada para realizar escaneos de red según el rango de direcciones IP especificado, con el objetivo de detectar puertos abiertos con interfaz web accesible. Genera una vista en HTML, así como reportes en formato PDF y XLS.",
-      imageUrl: "https://placehold.co/600x400/1e293b/93c5fd?text=Escáner+Red",
+      imageUrl: "https://i.imgur.com/cDD8OhW.png",
       tags: ["Python", "Redes", "Seguridad"],
       liveUrl: null,
       githubUrl: "https://github.com/andrescapacho/apps"
@@ -379,7 +379,7 @@ const ProjectsPage = () => {
     {
       title: "Página Web",
       description: "Creación de mi propia página web tipo portafolio, diseñada para presentar de manera profesional mi perfil personal, habilidades, experiencia y proyectos destacados.",
-      imageUrl: "https://placehold.co/600x400/1e293b/93c5fd?text=Página+Web",
+      imageUrl: "https://i.imgur.com/hSixX7k.png",
       tags: ["Documentación", "Soporte", "Notion"],
       liveUrl: "https://capacho.vercel.app/",
       githubUrl: null

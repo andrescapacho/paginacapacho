@@ -167,7 +167,7 @@ const HomePage = ({ setCurrentPage }) => (
         <motion.img 
           src="https://i.imgur.com/QeLysJa.jpeg?1" 
           alt="Foto de perfil" 
-          className="w-40 h-40 rounded-full mb-6 border-4 border-blue-500 shadow-lg"
+          className="w-60 h-60 rounded-full mb-6 border-4 border-blue-500 shadow-lg"
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ duration: 0.5, type: 'spring' }}
@@ -361,8 +361,8 @@ const AboutPage = () => {
 const ProjectsPage = () => {
   const projects = [
     {
-      title: "Herramienta de Inventario de TI",
-      description: "Pequeña aplicación de escritorio para que los usuarios envíen datos de sus equipos (IP, Serial, Usuario) de forma automática al departamento de TI.",
+      title: "Herramienta de Inventario",
+      description: "Pequeña aplicación de escritorio que permite a los usuarios enviar automáticamente información de sus equipos (IP, serial, usuario) al departamento de TI, facilitando el registro y control de activos tecnológicos.",
       imageUrl: "https://placehold.co/600x400/1e293b/93c5fd?text=Inventario+TI",
       tags: ["Python", "Tkinter", "Automatización"],
       liveUrl: null,
@@ -370,16 +370,16 @@ const ProjectsPage = () => {
     },
     {
       title: "Script de Monitoreo de Red",
-      description: "Un script en PowerShell que escanea la red local para detectar nuevos dispositivos y envía una alerta por correo electrónico si se encuentra una IP no reconocida.",
+      description: "Pequeña aplicación diseñada para realizar escaneos de red según el rango de direcciones IP especificado, con el objetivo de detectar puertos abiertos con interfaz web accesible. Genera una vista en HTML, así como reportes en formato PDF y XLS.",
       imageUrl: "https://placehold.co/600x400/1e293b/93c5fd?text=Escáner+Red",
       tags: ["PowerShell", "Redes", "Seguridad"],
       liveUrl: null,
       githubUrl: "https://github.com/andrescapacho/apps"
     },
     {
-      title: "Pagina Web",
+      title: "Página Web",
       description: "Creación de mi propia página web tipo portafolio, diseñada para presentar de manera profesional mi perfil personal, habilidades, experiencia y proyectos destacados.",
-      imageUrl: "https://placehold.co/600x400/1e293b/93c5fd?text=Pagina+Web",
+      imageUrl: "https://placehold.co/600x400/1e293b/93c5fd?text=Página+Web",
       tags: ["Documentación", "Soporte", "Notion"],
       liveUrl: "https://capacho.vercel.app/",
       githubUrl: null

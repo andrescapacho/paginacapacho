@@ -364,15 +364,15 @@ const ProjectsPage = () => {
       title: "Herramienta de Inventario",
       description: "Pequeña aplicación de escritorio que permite a los usuarios enviar automáticamente información de sus equipos (IP, serial, usuario) al departamento de TI, facilitando el registro y control de activos tecnológicos.",
       imageUrl: "https://placehold.co/600x400/1e293b/93c5fd?text=Inventario+TI",
-      tags: ["Python", "Tkinter", "Automatización"],
+      tags: ["Python", "SMTP", "Automatización"],
       liveUrl: null,
       githubUrl: "https://github.com/andrescapacho/apps"
     },
     {
-      title: "Script de Monitoreo de Red",
+      title: "App Escaneo de Red",
       description: "Pequeña aplicación diseñada para realizar escaneos de red según el rango de direcciones IP especificado, con el objetivo de detectar puertos abiertos con interfaz web accesible. Genera una vista en HTML, así como reportes en formato PDF y XLS.",
       imageUrl: "https://placehold.co/600x400/1e293b/93c5fd?text=Escáner+Red",
-      tags: ["PowerShell", "Redes", "Seguridad"],
+      tags: ["Python", "Redes", "Seguridad"],
       liveUrl: null,
       githubUrl: "https://github.com/andrescapacho/apps"
     },
